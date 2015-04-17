@@ -73,7 +73,7 @@ class WriteHost:
 
         print('Add to host file... \n')
         with open('/etc/hosts', 'rt') as hosts_file:
-            s = hosts_file.read() + '127.0.0.1 {hostname}'.format(hostname=hostname)
+            s = hosts_file.read() + '\n127.0.0.1 {hostname}'.format(hostname=hostname)
             with open('/tmp/etc_hosts.tmp', 'wt') as hosts_file:
                 hosts_file.write(s)
         os.system('sudo mv /tmp/etc_hosts.tmp /etc/hosts')
