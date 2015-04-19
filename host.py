@@ -47,7 +47,7 @@ class WriteHost:
 
     def check_user_settings(self):
         if not os.path.isfile('user_settings.txt'):
-            self.www_dir = str(input('Type your www dir like "/home/user/www":\n'))
+            self.www_dir = str(input('Type your www dir like "/home/user/www/":\n'))
             with open('user_settings.txt', 'w') as user_settings:
                 user_settings.write(self.www_dir)
         else:
@@ -79,7 +79,7 @@ class WriteHost:
         os.system('sudo mv /tmp/etc_hosts.tmp /etc/hosts')
 
         print('Generate virtual host file...\n')
-        with open('/tmp/' + hostname + '.tmp', 'wt') as file:
+        with open('/tmp/{hostname}.tmp'.format(hostname=hostname), 'wt') as file:
             conf = '<VirtualHost *:80>\n'
             conf += '\tServerAdmin webmaster@slocalhost\n'
             conf += '\tServerName {hostname}\n'.format(hostname=hostname)
@@ -92,8 +92,8 @@ class WriteHost:
             conf += '</VirtualHost>'
             file.write(conf)
 
-        os.system('sudo mv /tmp/' + hostname + '.tmp /etc/apache2/sites-available/' + hostname + '.conf')
-        os.system('sudo a2ensite ' + hostname + '.conf')
+        os.system('sudo mv /tmp/{hostname}.tmp /etc/apache2/sites-available/{hostname}.conf'.format(hostname=hostname))
+        os.system('sudo a2ensite {hostname}.conf'.format(hostname=hostname))
         os.system('sudo service apache2 restart')
 
     def remove_catalog(self, catalog):
@@ -101,7 +101,7 @@ class WriteHost:
 
     def remove_host(self, hostname):
         if os.path.isfile('/etc/apache2/sites-available/{hostname}.conf'.format(hostname=hostname)):
-            os.system('sudo a2dissite ' + hostname + '.conf')
+            os.system('sudo a2dissite {hostname}.conf'.format(hostname=hostname))
             os.system("sudo rm /etc/apache2/sites-available/{hostname}.conf".format(hostname=hostname))
         with open("/etc/hosts", "r") as hosts_file:
             lines = hosts_file.readlines()
