@@ -32,7 +32,7 @@ class WriteHost:
         if self.choice == 1:
             self.create_catalog(1)
         elif self.choice == 2:
-            self.create_host(2)
+            self.create_catalog(0)
         elif self.choice == 3:
             catalog = str(input("Enter catalog name: "))
             hostname = str(input("Enter host name: "))
