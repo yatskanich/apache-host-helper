@@ -94,7 +94,7 @@ class WriteHost:
 
         os.system('sudo mv /tmp/{hostname}.tmp /etc/apache2/sites-available/{hostname}.conf'.format(hostname=hostname))
         os.system('sudo a2ensite {hostname}.conf'.format(hostname=hostname))
-        os.system('sudo service apache2 restart')
+        os.system('sudo systemctl reload apache2')
 
     def remove_catalog(self, catalog):
         os.system('rm -rf {www_dir}{catalog}'.format(www_dir=self.www_dir, catalog=catalog))
@@ -112,7 +112,7 @@ class WriteHost:
                 elif line != '\n127.0.0.1 {hostname}\n'.format(hostname=hostname):
                     hosts_file.write(line)
 
-        os.system('sudo service apache2 restart')
+        os.system('sudo systemctl reload apache2')
 
 if __name__ == "__main__":
     print('Generate virtual host script.\n')
